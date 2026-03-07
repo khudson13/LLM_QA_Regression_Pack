@@ -65,6 +65,16 @@ Notes
 
 This version uses a human-in-the-loop workflow rather than fully automated inference. That is intentional: many important LLM quality dimensions still require human judgment, especially for grounding, ambiguity handling, and subtle hallucination detection.
 
+##Example Files
+
+This repository includes example outputs for reviewers who may not run the harness directly.
+
+* runs/results_sample.jsonl — sample run log with case-level judgments
+
+* reports/sample_report.md — sample Markdown regression report showing how findings are summarized
+
+These examples are included to demonstrate the intended evaluator workflow and reporting style without requiring live inference.
+
 ## Model Under Test
 
 The initial regression pack targets:

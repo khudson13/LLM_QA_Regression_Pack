@@ -63,6 +63,14 @@ def collect_cases(case_files: List[str]) -> List[Dict[str, Any]]:
     return all_cases
 
 
+def filter_cases_by_id(
+    cases: List[Dict[str, Any]],
+    allowed_case_ids: List[str],
+) -> List[Dict[str, Any]]:
+    allowed = set(allowed_case_ids)
+    return [case for case in cases if case["case_id"] in allowed]
+
+
 def prompt_for_multiline(label: str) -> str:
     print(f"\n{label}")
     print("(Paste text. Enter a single line with END when finished.)")
@@ -106,6 +114,7 @@ def main() -> None:
     model_name = input("Model under test [Qwen3-4B-Instruct]: ").strip() or "Qwen3-4B-Instruct"
 
     cases = collect_cases(CASE_FILES)
+    cases = filter_cases_by_id(cases, ["INF-001", "SCH-002", "GRD-003"])
     results: List[Dict[str, Any]] = []
 
     print(f"\nLoaded {len(cases)} cases.")

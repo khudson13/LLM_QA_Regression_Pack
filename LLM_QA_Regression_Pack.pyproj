@@ -37,6 +37,7 @@
     <Content Include="reports\sample_report.md" />
     <Content Include="rubrics\failure_tags.md" />
     <Content Include="rubrics\scoring_guide.md" />
+    <Content Include="runs\results_sample.jsonl" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="cases\" />
