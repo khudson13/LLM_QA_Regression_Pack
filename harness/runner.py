@@ -85,26 +85,48 @@ def prompt_for_multiline(label: str) -> str:
 
 def choose_failure_tags(available_tags: List[str]) -> List[str]:
     if not available_tags:
+        print("No failure tags available for this case.")
         return []
 
-    print("\nAvailable failure tags for this case:")
-    for i, tag in enumerate(available_tags, start=1):
-        print(f"  {i}. {tag}")
+    while True:
+        print("\nAvailable failure tags for this case:")
+        for i, tag in enumerate(available_tags, start=1):
+            print(f"  {i}. {tag}")
 
-    raw = input("Enter comma-separated tag numbers to apply (or press Enter for none): ").strip()
-    if not raw:
-        return []
+        raw = input(
+            "Enter comma-separated tag numbers to apply "
+            "(at least one required for FAIL): "
+        ).strip()
 
-    chosen: List[str] = []
-    for token in raw.split(","):
-        token = token.strip()
-        if not token:
+        if not raw:
+            print("At least one failure tag is required for a FAIL result.")
             continue
-        if token.isdigit():
+
+        chosen: List[str] = []
+        seen = set()
+
+        for token in raw.split(","):
+            token = token.strip()
+            if not token:
+                continue
+
+            if not token.isdigit():
+                print(f"Ignoring invalid entry: {token}")
+                continue
+
             idx = int(token)
             if 1 <= idx <= len(available_tags):
-                chosen.append(available_tags[idx - 1])
-    return chosen
+                tag = available_tags[idx - 1]
+                if tag not in seen:
+                    chosen.append(tag)
+                    seen.add(tag)
+            else:
+                print(f"Ignoring out-of-range entry: {token}")
+
+        if chosen:
+            return chosen
+
+        print("At least one valid failure tag is required for a FAIL result.")
 
 
 def main() -> None:
