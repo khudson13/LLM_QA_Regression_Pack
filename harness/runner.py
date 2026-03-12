@@ -82,6 +82,21 @@ def prompt_for_multiline(label: str) -> str:
         lines.append(line)
     return "\n".join(lines).strip()
 
+def prompt_for_notes(status: str, severity: str) -> str:
+    require_notes = status == "FAIL" and severity.lower() == "high"
+
+    while True:
+        prompt = "Notes (optional): "
+        if require_notes:
+            prompt = "Notes (required for high-severity FAIL): "
+
+        notes = input(prompt).strip()
+
+        if require_notes and not notes:
+            print("A note is required for high-severity FAIL results.")
+            continue
+
+        return notes
 
 def choose_failure_tags(available_tags: List[str]) -> List[str]:
     if not available_tags:
@@ -176,7 +191,7 @@ def main() -> None:
         if status == "FAIL":
             applied_tags = choose_failure_tags(case.get("failure_tags", []))
 
-        notes = input("Notes (optional): ").strip()
+        notes = prompt_for_notes(status, case["severity"])
 
         results.append(
             {
