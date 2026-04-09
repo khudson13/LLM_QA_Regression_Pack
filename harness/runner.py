@@ -31,7 +31,6 @@ def load_jsonl(path: str | Path) -> List[Dict[str, Any]]:
                 raise ValueError(f"Invalid JSON in {path} line {line_number}: {exc}") from exc
     return items
 
-
 def validate_case(case: Dict[str, Any]) -> None:
     required_fields = [
         "case_id",
