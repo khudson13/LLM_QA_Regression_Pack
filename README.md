@@ -1,5 +1,3 @@
----
-
 # LLM QA Regression Pack (Example Evaluation Suite)
 
 ## Overview
@@ -22,7 +20,7 @@ This structure allows evaluators to answer an important question:
 
 > **Did the model get worse after a change?**
 
----
+***
 
 ## How to Run
 
